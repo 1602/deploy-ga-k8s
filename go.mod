@@ -1,4 +1,4 @@
-module github.com/1602/gh-k8s-deploy
+module github.com/1602/deploy-ga-k8s
 
 go 1.22.0
 

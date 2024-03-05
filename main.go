@@ -63,9 +63,14 @@ func main() {
 
 	if repo == "" {
 		cmd := exec.Command("git", "config", "--get", "remote.origin.url")
-		out, err := cmd.Output()
+		o, err := cmd.Output()
 		if err == nil {
-			fmt.Println(out)
+			t := strings.Split(strings.TrimSuffix(strings.TrimSpace(strings.Split(string(o), ":")[1]), ".git"), "/")
+			if len(t) == 2 {
+				owner = t[0]
+				repo = t[1]
+			}
+			return
 		}
 	}
 
@@ -86,7 +91,6 @@ func main() {
 
 	workflow = strings.ToLower(workflow)
 
-	// runtime.GOMAXPROCS(runtime.NumCPU())
 	writer = uilive.New()
 	writer.Start()
 	gh(cl)
