@@ -2,7 +2,7 @@ module github.com/1602/deploy-ga-k8s
 
 go 1.22
 
-replace github.com/1602/witness => ../witness
+// replace github.com/1602/witness => ../witness
 
 require (
 	github.com/google/go-github/v59 v59.0.0
