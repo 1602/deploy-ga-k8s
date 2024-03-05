@@ -70,7 +70,6 @@ func main() {
 				owner = t[0]
 				repo = t[1]
 			}
-			return
 		}
 	}
 

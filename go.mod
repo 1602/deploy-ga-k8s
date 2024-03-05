@@ -1,6 +1,6 @@
 module github.com/1602/deploy-ga-k8s
 
-go 1.22.0
+go 1.22
 
 replace github.com/1602/witness => ../witness
 
