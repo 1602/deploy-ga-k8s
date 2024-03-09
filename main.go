@@ -55,15 +55,7 @@ func main() {
 	flag.Parse()
 
 	if repo == "" {
-		cmd := exec.Command("git", "config", "--get", "remote.origin.url")
-		o, err := cmd.Output()
-		if err == nil {
-			t := strings.Split(strings.TrimSuffix(strings.TrimSpace(strings.Split(string(o), ":")[1]), ".git"), "/")
-			if len(t) == 2 {
-				owner = t[0]
-				repo = t[1]
-			}
-		}
+		readRepoFromGit(&owner, &repo)
 	}
 
 	if help {
@@ -72,7 +64,7 @@ func main() {
 	}
 
 	if repo == "" {
-		fmt.Println("Specify repository name, for example service-api")
+		fmt.Println("Specify a repository name, for example: -repo service-api")
 		return
 	}
 
@@ -88,6 +80,24 @@ func main() {
 	gh(cl)
 	// k8s()
 	writer.Stop()
+}
+
+func readRepoFromGit(owner *string, repo *string) {
+	cmd := exec.Command("git", "config", "--get", "remote.origin.url")
+	o, err := cmd.Output()
+	if err == nil {
+		t := strings.Split(
+			strings.TrimSuffix(
+				strings.TrimSpace(strings.Split(string(o), ":")[1]),
+				".git",
+			),
+			"/",
+		)
+		if len(t) == 2 {
+			*owner = t[0]
+			*repo = t[1]
+		}
+	}
 }
 
 type ActiveRunDetails struct {
